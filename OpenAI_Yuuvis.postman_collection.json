@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "ef30bc00-759e-46d6-82fb-29c9e75b480f",
+		"name": "OpenAI_Yuuvis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16670806"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Update document metadata by ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"objects\": [{\r\n\t\t\"properties\": {\r\n\t\t\t\"objectTypeId\": {\r\n\t\t\t\t\"value\": \"document\"\r\n\t\t\t},\r\n\t\t\t\"Name\": {\r\n\t\t\t\t\"value\": \"Update Email\"\r\n\t\t\t}\r\n\t\t}\r\n\t}]\r\n}"
+				},
+				"url": {
+					"raw": "{{ip}}/dms-core/objects/{{objectId}}",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"dms-core",
+						"objects",
+						"{{objectId}}"
+					]
+				},
+				"description": "The **“Update document metadata by ID”** endpoint updates the metadata of the document (object) that matches the *objectId* path parameter. \r\n\r\nTo update the metadata send the request with the new metadata as request body and the ID of the document (object) as *objectId*. If one of the properties is missing in the new metadata, it will be removed from the document (object). \r\n\r\nMost of the system properties cannot be updated or are updated automatically. If the new metadata contains these properties, their values must match the values of the current version. Hence you can retrieve the current metadata using the “GET document metadata by ID“ endpoint first, to use the result. Edit some properties and post it again using this endpoint. \r\n\r\n[Read about Updating Documents with the yuuvis® API](https://developer.yuuvis.com/Documentation/Update-documents)  \r\n\r\nThe objectId path parameter must correspond to a previously imported object. [Read about importing objects with the yuuvis® API.](https://developer.yuuvis.com/Documentation/Import-and-store)"
+			},
+			"response": []
+		},
+		{
+			"name": "Store a single document",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{key}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"description": "JSON-File containing metadata for a single object.",
+							"type": "file",
+							"src": "/C:/Users/oelschlaegel/Documents/Metadaten/metadata_image_with_content.json"
+						},
+						{
+							"key": "cid_63apple",
+							"description": "Content object to be imported.",
+							"type": "file",
+							"src": "/C:/Users/oelschlaegel/Documents/Testdokumente/Test-png.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{ip}}/dms-core/objects",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"dms-core",
+						"objects"
+					]
+				},
+				"description": "The **“Store one or more documents”** endpoint imports a given metadata file, and optionally, one or more content files, as objects in the authenticated users’ yuuvis® tenant storage. \r\n\r\nSave your metadata as file (e.g. metadata.json) and use it for the ‘data’ body part. For the binary content, the cid_63apple parameter, you can use any file you'd like to store. \r\n\r\nIf the request is successful, the metadata of the now stored document will be returned in JSON format. \r\n\r\n[Read about Storing Documents with the yuuvis® API](https://developer.yuuvis.com/Documentation/Import-and-store)"
+			},
+			"response": []
+		},
+		{
+			"name": "Store multiple documents",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"description": "JSON-File containing metadata for multiple objects.",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "cid_63apple",
+							"description": "First content object to be imported.",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "cid_60apple",
+							"description": "Second content object to be imported.",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{ip}}/dms-core/objects",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"dms-core",
+						"objects"
+					]
+				},
+				"description": "The **“Store one or more documents”** endpoint imports a given metadata file, and optionally, one or more content files, as objects in the authenticated users’ yuuvis® tenant storage. \r\n\r\nSave your metadata as file (e.g. metadata.json) and use it for the ‘data’ body part. For the binary content, the cid_63apple parameter, you can use any file you'd like to store. \r\n\r\nIf the request is successful, the metadata of the now stored document will be returned in JSON format. \r\n\r\n[Read about Storing Documents with the yuuvis® API](https://developer.yuuvis.com/Documentation/Import-and-store)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get document metadata by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}/dms-core/objects/a93094d6-c83e-4a2c-b7ce-224f48390b3d",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"dms-core",
+						"objects",
+						"a93094d6-c83e-4a2c-b7ce-224f48390b3d"
+					]
+				},
+				"description": "The **“Get document metadata by ID”** endpoint returns the metadata related to the document (object) that matches the *objectId* path parameter. \r\n\r\n[Read about Retrieving Documents with the yuuvis® API ](https://developer.yuuvis.com/Documentation/Retrieve-documents)\r\n\r\nThe objectId path parameter must correspond to a previously imported object. [Read about importing objects with the yuuvis® API.](https://developer.yuuvis.com/Documentation/Import-and-store)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get document content by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{key}}"
+					}
+				],
+				"url": {
+					"raw": "{{ip}}/dms-core/objects/{{objectId}}/contents/file",
+					"host": [
+						"{{ip}}"
+					],
+					"path": [
+						"dms-core",
+						"objects",
+						"{{objectId}}",
+						"contents",
+						"file"
+					]
+				},
+				"description": "The **“Get document content by ID”** returns the original content file of the document (object) that matches the *objectId* path parameter. \r\n\r\n[Read about Retrieving Documents with the yuuvis® API](https://developer.yuuvis.com/Documentation/Retrieve-documents) \r\n\r\nThe objectId path parameter must correspond to a previously imported object. [Read about importing objects with the yuuvis® API.](https://developer.yuuvis.com/Documentation/Import-and-store)"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
